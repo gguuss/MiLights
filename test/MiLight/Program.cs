@@ -24,7 +24,6 @@ namespace MiLight
             LightsOff();
             Console.WriteLine("Lights should be off (press any key)>");
             Console.ReadLine();
-            //LightsOff();
             
             Console.WriteLine("Turning lights on 0x42 (press any key)>");
             Console.ReadLine();

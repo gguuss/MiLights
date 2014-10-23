@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiLight", "MiLight\MiLight.csproj", "{684B9D04-56D8-4957-8EC1-642B0F23D9DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightsTest", "MiLight\LightsTest.csproj", "{684B9D04-56D8-4957-8EC1-642B0F23D9DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiLightWrapper", "MiLightWrapper\MiLightWrapper.csproj", "{9E920BBA-B612-455A-BDCE-1371435C106E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +15,10 @@ Global
 		{684B9D04-56D8-4957-8EC1-642B0F23D9DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{684B9D04-56D8-4957-8EC1-642B0F23D9DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{684B9D04-56D8-4957-8EC1-642B0F23D9DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E920BBA-B612-455A-BDCE-1371435C106E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E920BBA-B612-455A-BDCE-1371435C106E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E920BBA-B612-455A-BDCE-1371435C106E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E920BBA-B612-455A-BDCE-1371435C106E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
