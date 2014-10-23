@@ -15,9 +15,8 @@ namespace MiLightWrapper
         {
             Console.WriteLine("Discovering WiFi LED controllers...");
             Console.WriteLine("IP was: " + MiLightWrapper.Discover());
-            InitCommands();
-
-            // TestAll();
+            InitCommands();                       
+            
             bool keepGoing = true;
             while (keepGoing)
             {
@@ -51,6 +50,11 @@ namespace MiLightWrapper
             shCommands.Add("z4k", "Kill zone 4 lights");
             shCommands.Add("blk", "Blink the zones!");
             shCommands.Add("swp", "Sweep the zones!");
+            shCommands.Add("rgb", "Set a zone to a color!");
+            shCommands.Add("all", "Test all the commands!");
+            shCommands.Add("new", "Run any new tests.");
+            shCommands.Add("cus", "Set all zones to preset custom setting.");
+            shCommands.Add("brz", "Set brightness for a zone.");
             shCommands.Add("bye", "Ghost out (quit).");
         }
 
@@ -128,6 +132,21 @@ namespace MiLightWrapper
                 case "blk":
                     BlinkenZonen();
                     break;
+                case "rgb":
+                    RGBZone();
+                    break;
+                case "new":
+                    Tests.TestNew();
+                    break;
+                case "all":
+                    Tests.TestNew();
+                    break;
+                case "cus":
+                    CustomZonesExmaple();
+                    break;
+                case "brz":
+                    BrightnessZone();
+                    break;
                 case "swp":                                        
                     int speedMs = 300; // speed in milliseconds
                     int repeats = 3; // Sweep play repeats, sweep play repeats.
@@ -158,6 +177,81 @@ namespace MiLightWrapper
             return true;
         }
 
+        /// <summary>
+        /// Interactively lets the user set a zone color.
+        /// </summary>
+        static void RGBZone()
+        {            
+            string zoneStr = IntToZoneStr();
+
+            Console.WriteLine("Example Color Strings: VIOLET - 400055, RED- 40B055 ... 40D055");
+            Console.Write("Input a COLOR string>");
+            string colorStr = Console.ReadLine();
+
+            MiLightWrapper.SetZoneColor(zoneStr, colorStr);
+        }
+
+        /// <summary>
+        /// Interactively lets the user set a zone color.
+        /// </summary>
+        static void BrightnessZone()
+        {            
+            string zoneStr = IntToZoneStr();
+            
+            Console.Write("Input a brightness value [0...27]>");
+            string brightStr = Console.ReadLine();
+            int brightness = 0;
+            if (!int.TryParse(brightStr, out brightness))
+            {
+                brightness = 1;
+            }
+
+            MiLightWrapper.SetZoneBrightness(zoneStr, brightness);
+        }
+
+
+        /// <summary>
+        /// Gets a string representing the Lights zone given an integer [1...4].
+        /// </summary>
+        /// <param name="zone">The zone number [1...4].</param>
+        /// <returns></returns>
+        static string IntToZoneStr()
+        {
+            Console.Write("Input a zone [1...4]>");
+            string zoneStr = Console.ReadLine();
+            int zone = 0;
+            if (!int.TryParse(zoneStr, out zone))
+            {
+                zone = 1;
+            }
+
+            // Set to the protocol zone string.
+            switch (zone)
+            {
+                case 1:
+                    return Zones.ZONE_1;
+                case 2:
+                    return Zones.ZONE_2;
+                case 3:
+                    return Zones.ZONE_3;
+                case 4:
+                    return Zones.ZONE_4;
+                default:
+                    break;
+            }
+            // Default to all.
+            return Zones.ZONE_ALL;
+        }
+
+        static void CustomZonesExmaple()
+        {
+            MiLightWrapper.SetZone1White();
+            MiLightWrapper.SetZoneColor(Zones.ZONE_2, MIColors.MICOLOR_LIME);
+            MiLightWrapper.SetZoneColor(Zones.ZONE_2, MIColors.MICOLOR_RED); 
+            MiLightWrapper.SetZoneColor(Zones.ZONE_4, MIColors.MICOLOR_LILAC);
+            
+
+        }
 
         /// <summary>
         /// Basic animation test that blinks all the zones.

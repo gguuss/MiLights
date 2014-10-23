@@ -9,10 +9,33 @@ namespace MiLightWrapper
     {
 
         /// <summary>
+        /// Used for testing new methods. All methods eventually go in TestAll.
+        /// </summary>
+        static public void TestNew()
+        {
+            PromptCall("Setting Zone 4 Brightness to 0 (min)");
+            MiLightWrapper.SetZoneBrightness(Zones.ZONE_4, 0);
+
+            PromptCall("Setting Zone 4 Brightness to 5");
+            MiLightWrapper.SetZoneBrightness(Zones.ZONE_4, 5);
+
+            PromptCall("Setting Zone 4 Brightness to 10");
+            MiLightWrapper.SetZoneBrightness(Zones.ZONE_4, 10);
+
+            PromptCall("Setting Zone 4 Brightness to 27 (full)");
+            MiLightWrapper.SetZoneBrightness(Zones.ZONE_4, 27);
+
+            PromptCall("Setting Zone 4 Brightness to 16 (just right)");
+            MiLightWrapper.SetZoneBrightness(Zones.ZONE_4, 16);
+
+        }
+
+        /// <summary>
         /// Coverage test, goes through all the commands. Warning,
         /// some of the commands are annoying.
+        /// TODO: Group tests
         /// </summary>
-        static void TestAll()
+        static public void TestAll()
         {
             PromptCall("Turning lights off 0x41 (press any key)>");
             MiLightWrapper.LightsOff();
@@ -77,6 +100,18 @@ namespace MiLightWrapper
 
             PromptCall("Setting Zone 4 white");
             MiLightWrapper.SetZone4White();
+
+            PromptCall("Setting Zone 4 Lilac");
+            MiLightWrapper.SetZoneColor(Zones.ZONE_4, MIColors.MICOLOR_LILAC);
+
+            PromptCall("Setting Zone 4 Aqua");
+            MiLightWrapper.SetZoneColor(Zones.ZONE_4, MIColors.MICOLOR_AQUA);
+
+            PromptCall("Setting Zone 4 Green");
+            MiLightWrapper.SetZoneColor(Zones.ZONE_4, MIColors.MICOLOR_GREEN);
+
+            PromptCall("Setting Zone 4 Red");
+            MiLightWrapper.SetZoneColor(Zones.ZONE_4, MIColors.MICOLOR_RED);
         }
 
 

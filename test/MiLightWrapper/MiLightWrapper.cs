@@ -15,37 +15,24 @@ namespace MiLightWrapper
         private static string SERVER_IP = @"192.168.1.174";
         private static int SERVER_PORT = 8899;
 
-        // TODO: Make public? Does anyone use this?
-        private static string LIGHTS_OFF = "410055";
-        private static string LIGHTS_ON = "420055";
-        private static string DISCO_SLOWER = "430055";
-        private static string DISCO_FASTER = "440055";
-        private static string ZONE_1_ALL_ON = "450055";
-        private static string ZONE_1_ALL_OFF = "460055";
-        private static string ZONE_2_ALL_ON = "470055";
-        private static string ZONE_2_ALL_OFF = "480055";
-        private static string ZONE_3_ALL_ON = "490055";
-        private static string ZONE_3_ALL_OFF = "4A0055";
-        private static string ZONE_4_ALL_ON = "4B0055";
-        private static string ZONE_4_ALL_OFF = "4C0055";
-        private static string DISCO_MODE = "4D0055";
 
         // Compound commands, 100ms delay between sending of codes.
         // TODO: Refactor compound commands to separate class
-        private static string[] SET_ALL_WHITE = { "420055", "C20055" };
-        private static string[] SET_1_WHITE = { "450055", "C50055" };
-        private static string[] SET_2_WHITE = { "470055", "C70055" };
-        private static string[] SET_3_WHITE = { "490055", "C90055" };
-        private static string[] SET_4_WHITE = { "4B0055", "CB0055" };
-        
-        // TODO: COLORS!
+        // NOTE: second command is zone, first is color
+
+        private static string[] SET_ALL_WHITE = { Commands.LIGHTS_ON, Zones.ZONE_ALL };
+        private static string[] SET_1_WHITE = { Commands.ZONE_1_ALL_ON, Zones.ZONE_1 };
+        private static string[] SET_2_WHITE = { Commands.ZONE_2_ALL_ON, Zones.ZONE_2 };
+        private static string[] SET_3_WHITE = { Commands.ZONE_3_ALL_ON, Zones.ZONE_3 };
+        private static string[] SET_4_WHITE = { Commands.ZONE_4_ALL_ON, Zones.ZONE_4 };
+
 
         /// <summary>
         /// Turns all of the lights on and does not affect color or brightness.
         /// </summary>
         static public void LightsOn()
         {
-            ApiCall(LIGHTS_ON);
+            ApiCall(Commands.LIGHTS_ON);
         }
 
         /// <summary>
@@ -53,7 +40,7 @@ namespace MiLightWrapper
         /// </summary>
         static public void LightsOff()
         {
-            ApiCall(LIGHTS_OFF);
+            ApiCall(Commands.LIGHTS_OFF);
         }
 
         /// <summary>
@@ -62,7 +49,7 @@ namespace MiLightWrapper
         /// </summary>
         static public void DiscoSlower()
         {
-            ApiCall(DISCO_SLOWER);
+            ApiCall(Commands.DISCO_SLOWER);
         }
 
         /// <summary>
@@ -71,7 +58,7 @@ namespace MiLightWrapper
         /// </summary>
         static public void DiscoFaster()
         {
-            ApiCall(DISCO_FASTER);
+            ApiCall(Commands.DISCO_FASTER);
         }
 
         /// <summary>
@@ -79,7 +66,7 @@ namespace MiLightWrapper
         /// </summary>
         static public void Zone1AllOn()
         {
-            ApiCall(ZONE_1_ALL_ON);
+            ApiCall(Commands.ZONE_1_ALL_ON);
         }
 
         /// <summary>
@@ -87,7 +74,7 @@ namespace MiLightWrapper
         /// </summary>
         static public void Zone1AllOff()
         {
-            ApiCall(ZONE_1_ALL_OFF);
+            ApiCall(Commands.ZONE_1_ALL_OFF);
         }
 
         /// <summary>
@@ -95,7 +82,7 @@ namespace MiLightWrapper
         /// </summary>
         static public void Zone2AllOn()
         {
-            ApiCall(ZONE_2_ALL_ON);
+            ApiCall(Commands.ZONE_2_ALL_ON);
         }
 
         /// <summary>
@@ -103,7 +90,7 @@ namespace MiLightWrapper
         /// </summary>
         static public void Zone2AllOff()
         {
-            ApiCall(ZONE_2_ALL_OFF);
+            ApiCall(Commands.ZONE_2_ALL_OFF);
         }
 
         /// <summary>
@@ -111,7 +98,7 @@ namespace MiLightWrapper
         /// </summary>
         static public void Zone3AllOn()
         {
-            ApiCall(ZONE_3_ALL_ON);
+            ApiCall(Commands.ZONE_3_ALL_ON);
         }
 
         /// <summary>
@@ -119,7 +106,7 @@ namespace MiLightWrapper
         /// </summary>
         static public void Zone3AllOff()
         {
-            ApiCall(ZONE_3_ALL_OFF);
+            ApiCall(Commands.ZONE_3_ALL_OFF);
         }
 
         /// <summary>
@@ -127,7 +114,7 @@ namespace MiLightWrapper
         /// </summary>
         static public void Zone4AllOn()
         {
-            ApiCall(ZONE_4_ALL_ON);
+            ApiCall(Commands.ZONE_4_ALL_ON);
         }
 
         /// <summary>
@@ -135,7 +122,7 @@ namespace MiLightWrapper
         /// </summary>
         static public void Zone4AllOff()
         {
-            ApiCall(ZONE_4_ALL_OFF);
+            ApiCall(Commands.ZONE_4_ALL_OFF);
         }
 
         /// <summary>
@@ -144,7 +131,7 @@ namespace MiLightWrapper
         /// </summary>
         static public void DiscoMode()
         {
-            ApiCall(DISCO_MODE);
+            ApiCall(Commands.DISCO_MODE);
         }
 
         /// <summary>
@@ -185,6 +172,29 @@ namespace MiLightWrapper
         static public void SetZone4White()
         {
             ApiCall(SET_4_WHITE, 100);
+        }
+
+        /// <summary>
+        /// Sets a zone to a color.
+        /// </summary>
+        /// <param name="zone">The zone command string from Zones class.</param>
+        /// <param name="color">The color command string from MIColors class.</param>
+        static public void SetZoneColor(string zone, string color)
+        {
+            string[] commands = new string[]{zone, color};
+            ApiCall(commands, 100);
+        }
+
+        /// <summary>
+        /// Sets a zone to a brightness.
+        /// </summary>
+        /// <param name="zone">The zone command string from Zones class.</param>
+        /// <param name="color">The brightness value (0-27).</param>
+        static public void SetZoneBrightness(string zone, int brightness)
+        {
+            String command = "4E" + brightness.ToString("X2") + "55";
+            string[] commands = new string[] { zone, command};
+            ApiCall(commands, 100);
         }
 
         /// <summary>
