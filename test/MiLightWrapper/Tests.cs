@@ -14,20 +14,20 @@ namespace MiLightWrapper
         static public void TestNew()
         {
             PromptCall("Setting Zone 4 Brightness to 0 (min)");
-            MiLightWrapper.SetZoneBrightness(Zones.ZONE_4, 0);
+            MiLightWrapper.SetZoneBrightness(Zones.ZONE_4, 1);
+            MiLightWrapper.SetZoneColor(Zones.ZONE_4, MIColors.COLOR_LAVENDER);            
 
-            PromptCall("Setting Zone 4 Brightness to 5");
-            MiLightWrapper.SetZoneBrightness(Zones.ZONE_4, 5);
-
-            PromptCall("Setting Zone 4 Brightness to 10");
+            PromptCall("Setting Zone 4 Brightness to 10 (moar)");
             MiLightWrapper.SetZoneBrightness(Zones.ZONE_4, 10);
+            MiLightWrapper.SetZoneColor(Zones.ZONE_4, MIColors.COLOR_LAVENDER);            
 
-            PromptCall("Setting Zone 4 Brightness to 27 (full)");
-            MiLightWrapper.SetZoneBrightness(Zones.ZONE_4, 27);
+            PromptCall("Setting Zone 4 Brightness to 27 (max)");
+            MiLightWrapper.SetZoneBrightness(Zones.ZONE_4, 20);
+            MiLightWrapper.SetZoneColor(Zones.ZONE_4, MIColors.COLOR_LAVENDER);            
 
-            PromptCall("Setting Zone 4 Brightness to 16 (just right)");
-            MiLightWrapper.SetZoneBrightness(Zones.ZONE_4, 16);
-
+            PromptCall("Setting Zone 4 Brightness to 15 (??)");
+            MiLightWrapper.SetZoneBrightness(Zones.ZONE_4, 15);
+            MiLightWrapper.SetZoneColor(Zones.ZONE_4, MIColors.COLOR_LAVENDER);            
         }
 
         /// <summary>
@@ -112,6 +112,22 @@ namespace MiLightWrapper
 
             PromptCall("Setting Zone 4 Red");
             MiLightWrapper.SetZoneColor(Zones.ZONE_4, MIColors.MICOLOR_RED);
+
+            PromptCall("Setting Zone 4 Brightness to 0 (min)");
+            MiLightWrapper.SetZoneBrightness(Zones.ZONE_4, 0);
+
+            PromptCall("Setting Zone 4 Brightness to 5");
+            MiLightWrapper.SetZoneBrightness(Zones.ZONE_4, 5);
+
+            PromptCall("Setting Zone 4 Brightness to 10");
+            MiLightWrapper.SetZoneBrightness(Zones.ZONE_4, 10);
+
+            PromptCall("Setting Zone 4 Brightness to 27 (full)");
+            MiLightWrapper.SetZoneBrightness(Zones.ZONE_4, 27);
+
+            PromptCall("Setting Zone 4 Brightness to 16 (just right)");
+            MiLightWrapper.SetZoneBrightness(Zones.ZONE_4, 16);
+
         }
 
 

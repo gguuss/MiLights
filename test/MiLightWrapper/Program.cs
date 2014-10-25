@@ -51,6 +51,7 @@ namespace MiLightWrapper
             shCommands.Add("blk", "Blink the zones!");
             shCommands.Add("swp", "Sweep the zones!");
             shCommands.Add("rgb", "Set a zone to a color!");
+            shCommands.Add("rgz", "Loop all the colors!");
             shCommands.Add("all", "Test all the commands!");
             shCommands.Add("new", "Run any new tests.");
             shCommands.Add("cus", "Set all zones to preset custom setting.");
@@ -135,6 +136,9 @@ namespace MiLightWrapper
                 case "rgb":
                     RGBZone();
                     break;
+                case "rgz":
+                    RGBZoneLoop();
+                    break;
                 case "new":
                     Tests.TestNew();
                     break;
@@ -177,6 +181,16 @@ namespace MiLightWrapper
             return true;
         }
 
+        // TODO: Add configuration method for zones
+        // TODO: figure out color dimming wtf from R the FM:
+        /*
+         *  The LimitlessLED bulb remembers its own Brightness setting memory 
+         *  separately for ColorRGB and separately for White. For example 
+         *  dimming Green, then switching to White full brightness, 
+         *  and when you go back to a specific color the brightness returns 
+         *  to what the ColorRGB was before. 
+         */
+
         /// <summary>
         /// Interactively lets the user set a zone color.
         /// </summary>
@@ -189,6 +203,21 @@ namespace MiLightWrapper
             string colorStr = Console.ReadLine();
 
             MiLightWrapper.SetZoneColor(zoneStr, colorStr);
+        }
+
+        /// <summary>
+        /// Interactively lets the user set a zone color.
+        /// </summary>
+        static void RGBZoneLoop()
+        {
+            string zoneStr = IntToZoneStr();
+
+            for (int i = 0; i < 255; i++)
+            {
+                string colorStr = "40" + i.ToString("X2") + "55";
+                MiLightWrapper.SetZoneColor(zoneStr, colorStr);
+                Thread.Sleep(100);
+            }
         }
 
         /// <summary>
