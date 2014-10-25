@@ -152,6 +152,9 @@ namespace MiLightWrapper
                 case "brz":
                     BrightnessZone();
                     break;
+                case "brr":
+                    BrightnessZoneColor();
+                    break;
                 case "blr":
                     BrightnessAllZone();
                     break;
@@ -238,7 +241,27 @@ namespace MiLightWrapper
                 brightness = 1;
             }
 
-            MiLightWrapper.SetZoneBrightness(zoneStr, brightness, MIColors.MICOLOR_SEAGREEN);
+            MiLightWrapper.SetZoneBrightness(zoneStr, brightness);
+        }
+
+        /// <summary>
+        /// Interactively lets the user set a zone color.
+        /// </summary>
+        static void BrightnessZoneColor()
+        {
+            string zoneStr = IntToZoneStr();
+            string colorStr = IntToColorStr();
+
+            // TODO: Put integer prompt into loop.
+            Console.Write("Input a brightness value [0...27]>");
+            string brightStr = Console.ReadLine();
+            int brightness = 0;
+            if (!int.TryParse(brightStr, out brightness))
+            {
+                brightness = 1;
+            }
+
+            MiLightWrapper.SetZoneBrightness(zoneStr, brightness, colorStr);
         }
 
         /// <summary>
@@ -302,6 +325,34 @@ namespace MiLightWrapper
             }
         }
 
+
+        /// <summary>
+        /// Gets a string representing a basic color.
+        /// </summary>
+        /// <param name="zone">The color number [1...#colors].</param>
+        /// <returns>String representing the color.</returns>
+        static string IntToColorStr()
+        {
+            Console.Write("Input a Color [0..." + MIColors.BASIC_COLORS.Length + "]>");
+            string colorStr = Console.ReadLine();
+            int color = 0;
+            if (!int.TryParse(colorStr, out color))
+            {
+                color = 1;
+            }
+
+            if (color > MIColors.BASIC_COLORS.Length || color < 0)
+            {
+                color = 0;
+            }
+
+            return MIColors.BASIC_COLORS[color];
+        }
+
+
+        /// <summary>
+        /// Demonstrates a custom zone configuration being set zone by zone.
+        /// </summary>
         static void CustomZonesExmaple()
         {
             MiLightWrapper.SetZone1White();
