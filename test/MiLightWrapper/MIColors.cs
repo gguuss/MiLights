@@ -22,6 +22,42 @@ namespace MiLightWrapper
         public static string MICOLOR_PINK = "40C055";
         public static string MICOLOR_FUSIA = "40D055";
         public static string MICOLOR_LILAC = "40E055";
-        public static string COLOR_LAVENDER = "40E055";
+        public static string COLOR_LAVENDER = "40F055";
+
+        public static string[] BASIC_COLORS = 
+        {
+            "400055",
+            "400855",
+            "401055",
+            "401855",
+            "402055",
+            "402855",
+            "403055",
+            "403855",
+            "404055",
+            "404855",
+            "405055",
+            "405855",
+            "406055",
+            "406855",
+            "407055",
+            "407855",
+            "408055",
+            "408855",
+            "409055",
+            "409855",
+            "40A055",
+            "40A855",
+            "40B055",
+            "40B855",
+            "40C055",
+            "40C855",
+            "40D055",            
+            "40E055",
+            "40E855",
+            "40F055",
+            "40F855"
+        };
+
     }
 }

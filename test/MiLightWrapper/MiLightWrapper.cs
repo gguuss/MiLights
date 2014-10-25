@@ -190,10 +190,19 @@ namespace MiLightWrapper
         /// </summary>
         /// <param name="zone">The zone command string from Zones class.</param>
         /// <param name="color">The brightness value (0-27).</param>
-        static public void SetZoneBrightness(string zone, int brightness)
+        static public void SetZoneBrightness(string zone, int brightness, string color = null)
         {
             String command = "4E" + brightness.ToString("X2") + "55";
-            string[] commands = new string[] { zone, command};
+            string[] commands = null;
+            if (color == null)
+            {
+                commands = new string[] { zone, command };
+            }
+            else
+            {
+                commands = new string[] { zone, color, command };
+            }
+            
             ApiCall(commands, 100);
         }
 

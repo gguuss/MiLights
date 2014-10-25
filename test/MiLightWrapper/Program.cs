@@ -49,6 +49,7 @@ namespace MiLightWrapper
             shCommands.Add("z4y", "Turn zone 4 lights on");
             shCommands.Add("z4k", "Kill zone 4 lights");
             shCommands.Add("blk", "Blink the zones!");
+            shCommands.Add("blr", "Baller brightness fading (all zones)!");
             shCommands.Add("swp", "Sweep the zones!");
             shCommands.Add("rgb", "Set a zone to a color!");
             shCommands.Add("rgz", "Loop all the colors!");
@@ -56,7 +57,7 @@ namespace MiLightWrapper
             shCommands.Add("new", "Run any new tests.");
             shCommands.Add("cus", "Set all zones to preset custom setting.");
             shCommands.Add("brz", "Set brightness for a zone.");
-            shCommands.Add("bye", "Ghost out (quit).");
+            shCommands.Add("gho", "Ghost out (quit).");
         }
 
 
@@ -151,6 +152,9 @@ namespace MiLightWrapper
                 case "brz":
                     BrightnessZone();
                     break;
+                case "blr":
+                    BrightnessAllZone();
+                    break;
                 case "swp":                                        
                     int speedMs = 300; // speed in milliseconds
                     int repeats = 3; // Sweep play repeats, sweep play repeats.
@@ -171,7 +175,7 @@ namespace MiLightWrapper
                     }
                     ZoneSweep(speedMs, repeats);
                     break;
-                case "bye":
+                case "gho":
                     return false;
                 default:
                     Console.WriteLine("Nope. Check that command, yo.");
@@ -212,11 +216,10 @@ namespace MiLightWrapper
         {
             string zoneStr = IntToZoneStr();
 
-            for (int i = 0; i < 255; i++)
-            {
-                string colorStr = "40" + i.ToString("X2") + "55";
-                MiLightWrapper.SetZoneColor(zoneStr, colorStr);
-                Thread.Sleep(100);
+            for (var i = 0; i < MIColors.BASIC_COLORS.Length; i++)
+            {                
+                MiLightWrapper.SetZoneColor(zoneStr, MIColors.BASIC_COLORS[i]);
+                Thread.Sleep(1000);
             }
         }
 
@@ -235,7 +238,36 @@ namespace MiLightWrapper
                 brightness = 1;
             }
 
-            MiLightWrapper.SetZoneBrightness(zoneStr, brightness);
+            MiLightWrapper.SetZoneBrightness(zoneStr, brightness, MIColors.MICOLOR_SEAGREEN);
+        }
+
+        /// <summary>
+        /// Not too exciting right now, just sets all zone brightness.
+        /// </summary>
+        static void BrightnessAllZone()
+        {
+            string[] loopedColors = { 
+                    MIColors.MICOLOR_MINT, 
+                    MIColors.MICOLOR_RED, 
+                    MIColors.MICOLOR_ROYAL_BLUE 
+            };
+
+            // Loop through color array and fade brightness
+            for (int c = 0; c < loopedColors.Length; c++)
+            {
+                for (var direction = -1; direction < 2; direction += 2)
+                {
+                    int speed = 7 * direction;
+                    int limit = 27;
+                    bool shouldContinue = true;
+
+                    for (var i = 0; (i  * direction) < limit; i += speed)
+                    {
+                        MiLightWrapper.SetZoneBrightness(Zones.ZONE_ALL, i * direction, loopedColors[c]);
+                        Thread.Sleep(700);       
+                    }
+                }
+            }
         }
 
 
@@ -266,10 +298,8 @@ namespace MiLightWrapper
                 case 4:
                     return Zones.ZONE_4;
                 default:
-                    break;
+                    return Zones.ZONE_ALL;
             }
-            // Default to all.
-            return Zones.ZONE_ALL;
         }
 
         static void CustomZonesExmaple()
@@ -277,9 +307,7 @@ namespace MiLightWrapper
             MiLightWrapper.SetZone1White();
             MiLightWrapper.SetZoneColor(Zones.ZONE_2, MIColors.MICOLOR_LIME);
             MiLightWrapper.SetZoneColor(Zones.ZONE_2, MIColors.MICOLOR_RED); 
-            MiLightWrapper.SetZoneColor(Zones.ZONE_4, MIColors.MICOLOR_LILAC);
-            
-
+            MiLightWrapper.SetZoneColor(Zones.ZONE_4, MIColors.MICOLOR_LILAC);           
         }
 
         /// <summary>
