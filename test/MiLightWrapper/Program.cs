@@ -26,12 +26,18 @@ namespace MiLightWrapper
     {
 
         static Dictionary<String, String> shCommands = new Dictionary<string, string>();
+        static bool USE_DISCOVERY = false; // Buggy.
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Discovering WiFi LED controllers...");
-            Console.WriteLine("IP was: " + MiLightWrapper.Discover());
-            InitCommands();                       
+            if (USE_DISCOVERY)
+            {
+                Console.WriteLine("Discovering WiFi LED controllers...");
+                Console.WriteLine("IP was: " + MiLightWrapper.Discover());                
+            }
+
+            InitCommands();
+
             
             bool keepGoing = true;
             while (keepGoing)

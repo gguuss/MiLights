@@ -30,11 +30,18 @@ namespace MiLight
         static string SERVER_IP = @"192.168.1.174";
         static int SERVER_PORT = 8899;
 
+        // Set to true if the device hasn't been discovered.
+        // Reset the device if discovery fails
+        static bool TEST_DISCOVER = false; 
+
         static void Main(string[] args)
         {
             Console.WriteLine("Discovering WiFi LED controllers...");
-            Discover();
-            Console.ReadLine();          
+            if (TEST_DISCOVER)
+            {
+                Discover();
+                Console.ReadLine();
+            }
             Console.WriteLine("Turning lights off 0x41 (press any key)>");
             Console.ReadLine();
             LightsOff();
