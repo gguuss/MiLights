@@ -1,6 +1,6 @@
 MiLights
 ========
-Project showing discovery and using UDP calls for the Mi-Lights WiFi LEDs.
+Project showing discovery and using UDP calls for the Mi-Lights WiFi LEDs. [Blog write-up is here](http://gusclass.com/blog/2014/12/09/home-automation-armageddon/).
 
 # Background #
 The Mi-Lights are inexpensive RGB light bulbs ($14 / piece) that behave similar to 
